@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, StyleSheet, Image} from 'react-native';
+import {Pressable, StyleSheet, Image, View} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-
+import MenuModal from '../screens/MenuModal';
 export default LogoIcon = () => {
   const [isPressed, setIsPressed] = useState(false);
+  const [isBlack, setIsBlack] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+  const [isAnimated, setIsAnimated] = useState(false);
   const scale = useSharedValue(0);
   const top = useSharedValue('44%');
   const bgColor = useSharedValue('transparent');
@@ -18,29 +21,54 @@ export default LogoIcon = () => {
       transform: [{scale: scale.value}],
     };
   });
+  function onTouch() {
+    if (isPressed) {
+      setIsAnimated(true);
+      setTimeout(() => {
+        setIsModal(!isModal);
+        scale.value = withTiming(1);
+        top.value = withTiming('44%');
+        bgColor.value = withTiming('transparent');
+        setIsBlack(!isBlack);
+      }, 500);
+    } else {
+      scale.value = withTiming(0.2);
+      top.value = withTiming('25%');
+      bgColor.value = withTiming('white');
+      setTimeout(() => {
+        setIsBlack(!isBlack);
+      }, 200);
+      setTimeout(() => {
+        setIsModal(!isModal);
+      }, 500);
+    }
+    setIsPressed(!isPressed);
+  }
+
   useEffect(() => {
     setTimeout(() => {
       scale.value = withTiming(1);
     }, 500);
   }, []);
-  function onTouch() {
-    if (isPressed) {
-      scale.value = withTiming(1);
-      top.value = withTiming('44%');
-      bgColor.value = withTiming('transparent');
-    } else {
-      scale.value = withTiming(0.2);
-      top.value = withTiming('25%');
-      bgColor.value = withTiming('white');
-    }
-    setIsPressed(!isPressed);
-  }
+
   return (
-    <Animated.View style={[styles.animated, reanimatedStyle]}>
-      <Pressable onPress={onTouch}>
-        <Image source={require('../assets/logo.png')} style={styles.image} />
-      </Pressable>
-    </Animated.View>
+    <>
+      <Animated.View style={[styles.animated, reanimatedStyle]}>
+        <Pressable onPress={onTouch}>
+          <Image
+            source={
+              isBlack
+                ? require('../assets/logo-black.png')
+                : require('../assets/logo.png')
+            }
+            style={styles.image}
+          />
+        </Pressable>
+      </Animated.View>
+      {isModal ? (
+        <MenuModal isAnimated={isAnimated} setIsAnimated={setIsAnimated} />
+      ) : null}
+    </>
   );
 };
 
