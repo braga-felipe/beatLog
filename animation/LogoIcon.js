@@ -6,7 +6,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import MenuModal from '../screens/MenuModal';
-export default LogoIcon = () => {
+export default LogoIcon = ({setIsLibrary, setIsPlay}) => {
   const [isPressed, setIsPressed] = useState(false);
   const [isBlack, setIsBlack] = useState(false);
   const [isModal, setIsModal] = useState(false);
@@ -21,6 +21,13 @@ export default LogoIcon = () => {
       transform: [{scale: scale.value}],
     };
   });
+  const modalProps = {
+    setIsLibrary,
+    setIsPlay,
+    isAnimated,
+    setIsAnimated,
+    onTouch,
+  };
   function onTouch() {
     if (isPressed) {
       setIsAnimated(true);
@@ -32,20 +39,30 @@ export default LogoIcon = () => {
         setIsBlack(!isBlack);
       }, 500);
     } else {
+      // change icon size
       scale.value = withTiming(0.2);
+      // move icon up
       top.value = withTiming('25%');
+      // backgroundColor white
       bgColor.value = withTiming('white');
+      // wait for change in background
       setTimeout(() => {
-        setIsBlack(!isBlack);
+        // change to black icon
+        setIsBlack(true);
       }, 200);
+      // wait for change in icon
       setTimeout(() => {
-        setIsModal(!isModal);
-      }, 500);
+        // open modal
+        setIsModal(true);
+      }, 250);
     }
+    // switch isPressed on/off
     setIsPressed(!isPressed);
   }
 
+  // handles icon scale on mount
   useEffect(() => {
+    // setTimeout to wait for ripples to load
     setTimeout(() => {
       scale.value = withTiming(1);
     }, 500);
@@ -65,9 +82,7 @@ export default LogoIcon = () => {
           />
         </Pressable>
       </Animated.View>
-      {isModal ? (
-        <MenuModal isAnimated={isAnimated} setIsAnimated={setIsAnimated} />
-      ) : null}
+      {isModal ? <MenuModal {...modalProps} /> : null}
     </>
   );
 };

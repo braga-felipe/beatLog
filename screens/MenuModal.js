@@ -1,32 +1,47 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, Image, Pressable} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-export default MenuModal = ({isAnimated, setIsAnimated}) => {
+import Button from '../components/Button';
+
+export default MenuModal = props => {
+  const {onTouch, setIsLibrary, setIsPlay, isAnimated, setIsAnimated} = props;
+  console.log({setIsLibrary});
+  const modalBgColor = useSharedValue('#f7f7f7');
+  const modalTop = useSharedValue('34%');
   const width = useSharedValue('0%');
   const height = useSharedValue('0%');
-  const opacity = useSharedValue(0);
+  const iconOpacity = useSharedValue(0);
+  const buttonProps = {
+    width,
+    height,
+    modalTop,
+    modalBgColor,
+    onTouch,
+  };
   const animated = useAnimatedStyle(() => {
     return {
+      backgroundColor: modalBgColor.value,
+      top: modalTop.value,
       width: width.value,
       height: height.value,
     };
   });
   const icons = useAnimatedStyle(() => {
-    return {opacity: opacity.value};
+    return {opacity: iconOpacity.value};
   });
   function onAnimate() {
     if (!isAnimated) {
       width.value = withTiming('80%');
       height.value = withTiming('20%');
       setTimeout(() => {
-        opacity.value = withTiming(1, {duration: 500});
-      }, 400);
+        iconOpacity.value = withTiming(1);
+      }, 300);
     } else {
-      opacity.value = withTiming(0, {duration: 200});
+      iconOpacity.value = withTiming(0);
       setTimeout(() => {
         height.value = withTiming('5%');
         width.value = withTiming('0%');
@@ -42,53 +57,34 @@ export default MenuModal = ({isAnimated, setIsAnimated}) => {
 
   return (
     <Animated.View style={[styles.container, animated]}>
-      {
-        <Animated.View
-          style={[
-            {top: '6%', flexDirection: 'row', justifyContent: 'space-around'},
-            icons,
-          ]}>
-          <Pressable>
-            <Image
-              source={require('../assets/dash-icon.png')}
-              style={styles.image}
-            />
-            <Text style={styles.iconText}>Library</Text>
-          </Pressable>
-          <Pressable>
-            <Image
-              source={require('../assets/play-icon.png')}
-              style={styles.image}
-            />
-            <Text style={styles.iconText}>Play</Text>
-          </Pressable>
-        </Animated.View>
-      }
+      <Animated.View style={[styles.iconContainer, icons]}>
+        <Button
+          icon={require('../assets/dash-icon.png')}
+          name="Library"
+          setView={setIsLibrary}
+          {...buttonProps}
+        />
+        <Button
+          icon={require('../assets/play-icon.png')}
+          name="Play"
+          setView={setIsPlay}
+          {...buttonProps}
+        />
+      </Animated.View>
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'center',
-    top: '34%',
     position: 'absolute',
+    alignSelf: 'center',
     borderRadius: 3,
-    backgroundColor: '#f7f7f7',
+    // backgroundColor: '#f7f7f7',
   },
-  iconText: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    alignSelf: 'center',
-  },
-  text: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 30,
-    alignSelf: 'center',
-  },
-  image: {
-    height: 100,
-    width: 100,
+  iconContainer: {
+    top: '6%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
