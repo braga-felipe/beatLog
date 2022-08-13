@@ -44,7 +44,7 @@ export default LogoIcon = ({setIsLibrary, setIsPlay}) => {
       // move icon up
       top.value = withTiming('25%');
       // backgroundColor white
-      bgColor.value = withTiming('white');
+      bgColor.value = withTiming('#f7f7f7');
       // wait for change in background
       setTimeout(() => {
         // change to black icon

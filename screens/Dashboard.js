@@ -4,6 +4,7 @@ import {View} from 'react-native';
 import Background from '../components/Background';
 import LogoIcon from '../animation/LogoIcon';
 import Library from '../screens/Library';
+import PlayButtonsView from '../screens/PlayButtonsView';
 
 export default Dashboard = () => {
   /* swtich states to render components conditionally */
@@ -22,16 +23,17 @@ export default Dashboard = () => {
           {/* User's Space */}
           <Library />
         </>
-      ) : isPlay ? (
-        <>
-          {/* TODO: Buttons to manage Play */}
-          ''
-        </>
       ) : (
         <>
           {/* Dashboard Screen */}
           <Background />
           <LogoIcon {...props} />
+          {isPlay && (
+            <>
+              {/* TODO: Buttons to manage Play */}
+              <PlayButtonsView setIsPlay={setIsPlay} />
+            </>
+          )}
         </>
       )}
     </View>

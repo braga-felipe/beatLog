@@ -33,6 +33,7 @@ const Button = props => {
   function onPlay() {
     onTouch();
     /* TODO: add loginc for rendering Play buttons */
+    setView(true);
   }
   return (
     <Animated.View style={[button]}>

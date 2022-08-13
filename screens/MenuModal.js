@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     borderRadius: 3,
-    // backgroundColor: '#f7f7f7',
   },
   iconContainer: {
     top: '6%',
