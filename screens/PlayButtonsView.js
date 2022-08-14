@@ -1,5 +1,5 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -8,9 +8,23 @@ import Animated, {
 import PlayButton from '../components/PlayButton';
 
 export default PlayButtonsView = ({setIsPlay}) => {
-  console.log({setIsPlay});
+  const bottom = useSharedValue('20%');
+  const opacity = useSharedValue(0);
+  const container = useAnimatedStyle(() => {
+    return {
+      bottom: bottom.value,
+      opacity: opacity.value,
+    };
+  });
+  function mountContainer() {
+    bottom.value = withTiming('35%');
+    opacity.value = withTiming(1);
+  }
+  useEffect(() => {
+    setTimeout(() => mountContainer(), 450);
+  });
   return (
-    <Animated.View style={styles.container}>
+    <Animated.View style={[styles.container, container]}>
       <Animated.View style={styles.save}>
         <PlayButton icon="◘" />
       </Animated.View>
@@ -27,10 +41,9 @@ export default PlayButtonsView = ({setIsPlay}) => {
 const styles = StyleSheet.create({
   container: {
     left: '30%',
-    bottom: '35%',
     position: 'absolute',
     flexDirection: 'row',
-    backgroundColor: 'transparent',
+    alignItems: 'center',
   },
   save: {},
   play: {},
