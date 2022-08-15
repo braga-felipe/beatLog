@@ -17,7 +17,7 @@ export default Dashboard = () => {
     setIsPlay,
   };
   return (
-    <View style={{flex: 1, justifyContent: 'center'}}>
+    <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'black'}}>
       {isLibrary ? (
         <>
           {/* User's Space */}

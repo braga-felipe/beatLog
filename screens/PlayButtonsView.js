@@ -31,14 +31,14 @@ export default PlayButtonsView = ({setIsPlay}) => {
   });
   return (
     <Animated.View style={[styles.container, container]}>
-      <Animated.View style={styles.save}>
-        <PlayButton icon="◘" />
+      <Animated.View>
+        <PlayButton icon="save" />
       </Animated.View>
-      <Animated.View style={[styles.play]}>
-        <PlayButton icon="▶︎" />
+      <Animated.View>
+        <PlayButton icon="play" />
       </Animated.View>
-      <Animated.View style={styles.exit}>
-        <PlayButton icon="✖︎" setter={unmountContainer} />
+      <Animated.View>
+        <PlayButton icon="close" setter={unmountContainer} />
       </Animated.View>
     </Animated.View>
   );
@@ -46,12 +46,10 @@ export default PlayButtonsView = ({setIsPlay}) => {
 
 const styles = StyleSheet.create({
   container: {
-    left: '30%',
+    top: '63%',
+    left: '23%',
     position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
   },
-  save: {},
-  play: {},
-  exit: {},
 });

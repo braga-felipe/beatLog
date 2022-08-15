@@ -1,7 +1,11 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import BeatList from '../components/BeatList';
-
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 let beatlist = [
   {id: '1', name: 'Club'},
   {id: '2', name: 'Funk'},
@@ -31,11 +35,28 @@ let collectionlist = [
 ];
 
 export default Library = ({setIsLibrary}) => {
+  const opacity = useSharedValue(1);
+  const value = useSharedValue('100%');
+  const unmount = useAnimatedStyle(() => {
+    return {
+      height: value.value,
+      width: value.value,
+      opacity: opacity.value,
+    };
+  });
+
+  function close() {
+    opacity.value = withTiming(0);
+    value.value = withTiming('0%');
+    setTimeout(() => {
+      setIsLibrary(false);
+    }, 200);
+  }
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, unmount]}>
       <Text style={styles.text}>Library</Text>
-      <BeatList name="Beats" list={beatlist} />
-      <BeatList name="Collections" list={collectionlist} />
+      <BeatList name="Beats" list={beatlist} unmount={unmount} />
+      <BeatList name="Collections" list={collectionlist} unmount={unmount} />
       <View
         style={{
           backgroundColor: 'white',
@@ -45,17 +66,17 @@ export default Library = ({setIsLibrary}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Pressable onPress={() => setIsLibrary(false)}>
-          <Text style={{fontSize: 50, fontWeight: 'bold'}}>{'<'}</Text>
+        <Pressable onPress={close}>
+          <Image source={require('../assets/back.png')} style={styles.image} />
         </Pressable>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    alignSelf: 'center',
     backgroundColor: 'black',
     alignItems: 'center',
   },
@@ -64,5 +85,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  image: {
+    height: 85,
+    width: 85,
   },
 });

@@ -18,6 +18,7 @@ export default BeatList = ({name, list}) => {
   });
   function render({item}) {
     const renderProps = {
+      list,
       backgroundColor: selectedId === item.id ? '#303134' : '#C7C7C7',
       color: selectedId === item.id ? 'white' : 'black',
     };
@@ -31,14 +32,14 @@ export default BeatList = ({name, list}) => {
     );
   }
   useEffect(() => {
-    opacity.value = withTiming(1);
-    return () => {
-      opacity.value = withTiming(0);
-    };
-  });
+    setTimeout(() => {
+      opacity.value = withTiming(1);
+    }, 200);
+    return () => (opacity.value = 0);
+  }, []);
   return (
     <>
-      <Text style={styles.text}>{name}</Text>
+      {name && <Text style={styles.text}>{name}</Text>}
       <Animated.View style={[styles.container, animateContainer]}>
         <FlatList
           data={list}

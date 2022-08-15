@@ -6,7 +6,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-const Button = props => {
+export default MenuItem = props => {
   /* props to control animation */
   const {icon, name, width, height, modalTop, modalBgColor, setView, onTouch} =
     props;
@@ -47,8 +47,6 @@ const Button = props => {
     </Animated.View>
   );
 };
-
-export default Button;
 
 const styles = StyleSheet.create({
   iconText: {

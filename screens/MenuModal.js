@@ -5,11 +5,11 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import Button from '../components/Button';
+import MenuItem from '../components/MenuItem';
 
 export default MenuModal = props => {
   const {onTouch, setIsLibrary, setIsPlay, isAnimated, setIsAnimated} = props;
-  console.log({setIsLibrary});
+
   const modalBgColor = useSharedValue('#f7f7f7');
   const modalTop = useSharedValue('34%');
   const width = useSharedValue('0%');
@@ -58,13 +58,13 @@ export default MenuModal = props => {
   return (
     <Animated.View style={[styles.container, animated]}>
       <Animated.View style={[styles.iconContainer, icons]}>
-        <Button
+        <MenuItem
           icon={require('../assets/dash-icon.png')}
           name="Library"
           setView={setIsLibrary}
           {...buttonProps}
         />
-        <Button
+        <MenuItem
           icon={require('../assets/play-icon.png')}
           name="Play"
           setView={setIsPlay}
