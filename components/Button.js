@@ -1,11 +1,11 @@
 import {StyleSheet, Image, Text, Pressable} from 'react-native';
 import React from 'react';
-
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+
 const Button = props => {
   /* props to control animation */
   const {icon, name, width, height, modalTop, modalBgColor, setView, onTouch} =

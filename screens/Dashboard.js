@@ -21,7 +21,7 @@ export default Dashboard = () => {
       {isLibrary ? (
         <>
           {/* User's Space */}
-          <Library />
+          <Library setIsLibrary={setIsLibrary} />
         </>
       ) : (
         <>
@@ -31,7 +31,7 @@ export default Dashboard = () => {
           {isPlay && (
             <>
               {/* TODO: Buttons to manage Play */}
-              <PlayButtonsView setIsPlay={setIsPlay} />
+              <PlayButtonsView isPlay={isPlay} setIsPlay={setIsPlay} />
             </>
           )}
         </>

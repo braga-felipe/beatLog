@@ -16,6 +16,12 @@ export default PlayButtonsView = ({setIsPlay}) => {
       opacity: opacity.value,
     };
   });
+  function unmountContainer() {
+    opacity.value = withTiming(0);
+    setTimeout(() => {
+      setIsPlay(false);
+    }, 200);
+  }
   function mountContainer() {
     bottom.value = withTiming('35%');
     opacity.value = withTiming(1);
@@ -32,7 +38,7 @@ export default PlayButtonsView = ({setIsPlay}) => {
         <PlayButton icon="▶︎" />
       </Animated.View>
       <Animated.View style={styles.exit}>
-        <PlayButton icon="✖︎" setter={setIsPlay} />
+        <PlayButton icon="✖︎" setter={unmountContainer} />
       </Animated.View>
     </Animated.View>
   );

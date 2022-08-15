@@ -8,7 +8,9 @@ export default PlayButtonsView = ({icon, setter}) => {
     <Pressable
       style={[styles.button, {height: size, width: size, top: top}]}
       onPress={() => {
-        setter(false);
+        if (icon === '✖︎') {
+          setter();
+        } else setter(false);
       }}>
       <Text style={styles.text}>{icon}</Text>
     </Pressable>
