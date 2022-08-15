@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {FlatList, Pressable, StyleSheet, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Animated, {
   useSharedValue,
@@ -6,7 +6,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-
+import BeatItem from './BeatItem';
 export default Expandable = ({beat, backgroundColor, color, onPress, list}) => {
   const [isPressed, setIsPressed] = useState(false);
   const width = useSharedValue('0%');
@@ -19,7 +19,11 @@ export default Expandable = ({beat, backgroundColor, color, onPress, list}) => {
       height: height.value,
     };
   });
-
+  const beatProps = {
+    backgroundColor,
+    color,
+    onPress,
+  };
   const pop = useAnimatedStyle(() => {
     return {
       marginVertical: margin.value,
@@ -58,7 +62,23 @@ export default Expandable = ({beat, backgroundColor, color, onPress, list}) => {
         }}>
         <Text style={[styles.text, {color}]}>{beat.name}</Text>
       </Pressable>
-      <Animated.View style={[styles.expandable, expandable]}></Animated.View>
+      <Animated.View style={[styles.expandable, expandable]}>
+        <FlatList
+          data={beat.beats}
+          renderItem={({item}) => (
+            // <BeatItem beat={item} {...beatProps} list={beat.beats} />
+            <Text
+              style={{
+                left: '3%',
+                color: 'white',
+                fontSize: 15,
+                fontWeight: 'bold',
+              }}>
+              {item.name}
+            </Text>
+          )}
+        />
+      </Animated.View>
     </Animated.View>
   );
 };
@@ -84,7 +104,7 @@ const styles = StyleSheet.create({
   expandable: {
     borderRadius: 3,
     left: '1.3%',
-    top: 37,
+    top: 35,
     position: 'absolute',
     width: '99.5%',
     marginbottom: '1.5%',
