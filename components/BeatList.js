@@ -6,7 +6,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import BeatItem from './BeatItem';
-
+import Expandable from './Expandable';
 export default BeatList = ({name, list}) => {
   const [selectedId, setSelectedId] = useState(null);
 
@@ -23,8 +23,14 @@ export default BeatList = ({name, list}) => {
       color: selectedId === item.id ? 'white' : 'black',
     };
 
-    return (
+    return name === 'Beats' ? (
       <BeatItem
+        beat={item}
+        {...renderProps}
+        onPress={() => setSelectedId(item.id)}
+      />
+    ) : (
+      <Expandable
         beat={item}
         {...renderProps}
         onPress={() => setSelectedId(item.id)}

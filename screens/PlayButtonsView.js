@@ -47,7 +47,7 @@ export default PlayButtonsView = ({setIsPlay}) => {
 const styles = StyleSheet.create({
   container: {
     top: '63%',
-    left: '23%',
+    alignSelf: 'center',
     position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
