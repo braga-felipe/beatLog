@@ -1,40 +1,16 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import BeatList from '../components/BeatList';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-let beatlist = [
-  {id: '1', name: 'Club'},
-  {id: '2', name: 'Funk'},
-  {id: '3', name: 'Hard Bop'},
-  {id: '4', name: 'Samba'},
-  {id: '5', name: 'Mambo'},
-  {id: '6', name: 'Tresillo'},
-];
-let collectionlist = [
-  {
-    id: '7',
-    name: 'Favorites',
-    beats: [
-      {id: '2', name: 'Funk'},
-      {id: '4', name: 'Samba'},
-    ],
-  },
-  {
-    id: '8',
-    name: 'Rhythm Study',
-    beats: [
-      {id: '3', name: 'Hard Bop'},
-      {id: '5', name: 'Mambo'},
-      {id: '6', name: 'Tresillo'},
-    ],
-  },
-];
+import {getBeats, getCollections} from '../services';
 
 export default Library = ({setIsLibrary}) => {
+  const [beatlist, setBeatlist] = useState([]);
+  const [collectionList, setCollectionList] = useState([]);
   const opacity = useSharedValue(1);
   const value = useSharedValue('100%');
   const unmount = useAnimatedStyle(() => {
@@ -52,11 +28,17 @@ export default Library = ({setIsLibrary}) => {
       setIsLibrary(false);
     }, 200);
   }
+
+  useEffect(() => {
+    getBeats(setBeatlist);
+    getCollections(setCollectionList);
+  }, []);
+
   return (
     <Animated.View style={[styles.container, unmount]}>
       <Text style={styles.text}>Library</Text>
       <BeatList name="Beats" list={beatlist} unmount={unmount} />
-      <BeatList name="Collections" list={collectionlist} unmount={unmount} />
+      <BeatList name="Collections" list={collectionList} unmount={unmount} />
       <View
         style={{
           backgroundColor: 'white',
