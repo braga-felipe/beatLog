@@ -18,15 +18,22 @@ export async function getCollections(setter) {
     return error;
   }
   console.log('[RES] GET ALL COLLECTIONS: ', data);
+  // TODO: change this logic to happen only when user access collection
+  // data.forEach(async coll => {
+  //   const beats = await getCollectionBeats(coll);
+  //   console.log({beats});
+  //   coll.beats = beats;
+  // });
+
   setter(data);
   return data;
 }
 
-export async function getCollectionBeats(id) {
+export async function getCollectionBeats(coll) {
   let {data, error} = await supabase
     .from('beat')
     .select('*')
-    .eq('collection_id', id);
+    .eq('collection_id', coll.id);
   if (error) {
     console.log('[ERROR] GET COLLECTION BEATS: ', error);
     return error;
@@ -35,15 +42,3 @@ export async function getCollectionBeats(id) {
   console.log({data});
   return data;
 }
-
-/* 
-
-let { data: beat, error } = await supabase
-  .from('beat')
-  .select(`
-    some_column,
-    other_table (
-      foreign_key
-    )
-  `)
-*/

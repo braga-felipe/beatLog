@@ -14,8 +14,10 @@ export default Dashboard = () => {
   /* to pass switch as props */
   const props = {
     setIsLibrary,
+    isPlay,
     setIsPlay,
   };
+
   return (
     <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'black'}}>
       {isLibrary ? (

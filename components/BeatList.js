@@ -31,7 +31,7 @@ export default BeatList = ({name, list}) => {
       />
     ) : (
       <Expandable
-        beat={item}
+        collection={item}
         {...renderProps}
         onPress={() => setSelectedId(item.id)}
       />

@@ -1,13 +1,15 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
+import { StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 import PlayButton from '../components/PlayButton';
+import { useBeatContext } from '../context';
 
-export default PlayButtonsView = ({setIsPlay}) => {
+export default PlayButtonsView = ({ setIsPlay }) => {
+  const { reset } = useBeatContext();
   const bottom = useSharedValue('20%');
   const opacity = useSharedValue(0);
   const container = useAnimatedStyle(() => {
@@ -17,10 +19,12 @@ export default PlayButtonsView = ({setIsPlay}) => {
     };
   });
   function unmountContainer() {
-    opacity.value = withTiming(0);
-    setTimeout(() => {
-      setIsPlay(false);
-    }, 200);
+    if (!reset()) {
+      opacity.value = withTiming(0);
+      setTimeout(() => {
+        setIsPlay(false);
+      }, 200);
+    }
   }
   function mountContainer() {
     bottom.value = withTiming('35%');

@@ -6,24 +6,33 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import BeatItem from './BeatItem';
-export default Expandable = ({beat, backgroundColor, color, onPress, list}) => {
+import {getCollectionBeats} from '../services';
+
+export default Expandable = ({
+  collection,
+  backgroundColor,
+  color,
+  onPress,
+  list,
+}) => {
   const [isPressed, setIsPressed] = useState(false);
+  const [beats, setBeats] = useState([]);
   const width = useSharedValue('0%');
   const height = useSharedValue('0%');
   const margin = useSharedValue('1%');
   const container = useSharedValue(40);
+  const opacity = useSharedValue(0);
+  const beatStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+    };
+  });
   const expandable = useAnimatedStyle(() => {
     return {
       backgroundColor,
       height: height.value,
     };
   });
-  const beatProps = {
-    backgroundColor,
-    color,
-    onPress,
-  };
   const pop = useAnimatedStyle(() => {
     return {
       marginVertical: margin.value,
@@ -35,19 +44,34 @@ export default Expandable = ({beat, backgroundColor, color, onPress, list}) => {
     setTimeout(() => {
       width.value = withSpring('98%');
       //TODO: make sure this uses something other than the index
-    }, 100 * list.indexOf(beat));
+    }, 100 * list.indexOf(collection));
   }
+  
   function expand() {
+    addBeats();
     if (!isPressed) {
       container.value = withTiming(120);
       height.value = withTiming('100%');
       margin.value = withTiming('11%');
+      setTimeout(() => {
+        opacity.value = withTiming(1);
+      }, 300);
     } else {
-      container.value = withTiming(40);
-      height.value = withTiming('0%');
-      margin.value = withTiming('1%');
+      opacity.value = withTiming(0);
+      setTimeout(() => {
+        container.value = withTiming(40);
+        height.value = withTiming('0%');
+        margin.value = withTiming('1%');
+      }, 300);
     }
     setIsPressed(!isPressed);
+  }
+  async function addBeats() {
+    if (!beats.length) {
+      const res = await getCollectionBeats(collection);
+      console.log({res});
+      setBeats(res);
+    }
   }
   useEffect(() => {
     popItem();
@@ -57,16 +81,20 @@ export default Expandable = ({beat, backgroundColor, color, onPress, list}) => {
       <Pressable
         style={[styles.button, {backgroundColor}]}
         onPress={() => {
-          expand();
-          onPress();
+          setTimeout(
+            () => {
+              expand();
+              onPress();
+            },
+            !beats.length ? 250 : 0,
+          );
         }}>
-        <Text style={[styles.text, {color}]}>{beat.name}</Text>
+        <Text style={[beatStyle, styles.text, {color}]}>{collection.name}</Text>
       </Pressable>
       <Animated.View style={[styles.expandable, expandable]}>
         <FlatList
-          data={beat.beats}
+          data={beats}
           renderItem={({item}) => (
-            // <BeatItem beat={item} {...beatProps} list={beat.beats} />
             <Text
               style={{
                 left: '3%',

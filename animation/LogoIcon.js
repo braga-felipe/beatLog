@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Pressable, StyleSheet, Image, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Image, View } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import { useBeatContext } from '../context';
+
 import MenuModal from '../screens/MenuModal';
-export default LogoIcon = ({setIsLibrary, setIsPlay}) => {
+export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
+  const beat = useBeatContext();
   const [isPressed, setIsPressed] = useState(false);
   const [isBlack, setIsBlack] = useState(false);
   const [isModal, setIsModal] = useState(false);
@@ -18,16 +21,18 @@ export default LogoIcon = ({setIsLibrary, setIsPlay}) => {
     return {
       backgroundColor: bgColor.value,
       top: top.value,
-      transform: [{scale: scale.value}],
+      transform: [{ scale: scale.value }],
     };
   });
   const modalProps = {
+    isPlay,
     setIsLibrary,
     setIsPlay,
     isAnimated,
     setIsAnimated,
     onTouch,
   };
+
   function onTouch() {
     if (isPressed) {
       setIsAnimated(true);
@@ -59,7 +64,13 @@ export default LogoIcon = ({setIsLibrary, setIsPlay}) => {
     // switch isPressed on/off
     setIsPressed(!isPressed);
   }
-
+  function dance() {
+    beat.listen();
+    scale.value = withTiming(0.85, { duration: 50 });
+    setTimeout(() => {
+      scale.value = withTiming(1, { duration: 50 });
+    }, 50);
+  }
   // handles icon scale on mount
   useEffect(() => {
     // setTimeout to wait for ripples to load
@@ -71,7 +82,7 @@ export default LogoIcon = ({setIsLibrary, setIsPlay}) => {
   return (
     <>
       <Animated.View style={[styles.animated, reanimatedStyle]}>
-        <Pressable onPress={onTouch}>
+        <Pressable onPress={isPlay ? dance : onTouch}>
           <Image
             source={
               isBlack

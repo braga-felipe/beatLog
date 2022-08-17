@@ -1,15 +1,15 @@
-import {Pressable, StyleSheet, Image, Text} from 'react-native';
+import { Pressable, StyleSheet, Image } from 'react-native';
 import React from 'react';
-
-export default PlayButton = ({icon, setter}) => {
+export default PlayButton = ({ icon, setter }) => {
   const size = icon === 'play' ? 80 : 65;
   const top = icon === 'play' ? 0 : 20;
   return (
     <Pressable
       style={[styles.button]}
       onPress={() => {
-        if (icon === 'close') setter();
-        else setter(false);
+        if (icon === 'close') {
+          setter();
+        } else setter(false);
       }}>
       <Image
         source={
@@ -20,7 +20,7 @@ export default PlayButton = ({icon, setter}) => {
             : require('../assets/add-new.png')
         }
         style={[
-          icon === 'close' && {transform: [{rotate: '45deg'}]},
+          icon === 'close' && { transform: [{ rotate: '45deg' }] },
           {
             height: size,
             width: size,
