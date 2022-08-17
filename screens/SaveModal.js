@@ -6,8 +6,6 @@ const SaveModal = ({ navigation }) => {
   const { beat, save } = useBeatContext();
   const [beatName, setBeatName] = useState('');
 
-  //TODO: add cancel function
-
   return (
     <View style={styles.container}>
       <Text style={[styles.text, styles.header]}>Save your Beat</Text>

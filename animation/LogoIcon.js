@@ -9,7 +9,7 @@ import { useBeatContext } from '../context';
 
 import MenuModal from '../screens/MenuModal';
 export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
-  const { listen, setIsTapped } = useBeatContext();
+  const { listen, setIsTapped, beep } = useBeatContext();
   const [isPressed, setIsPressed] = useState(false);
   const [isBlack, setIsBlack] = useState(false);
   const [isModal, setIsModal] = useState(false);
@@ -65,6 +65,7 @@ export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
     setIsPressed(!isPressed);
   }
   function dance() {
+    beep.play();
     listen();
     // to switch rendering of back button
     setIsTapped(true);

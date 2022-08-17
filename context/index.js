@@ -8,8 +8,19 @@ import React, {
 import { tapLogger } from '../helpers';
 import { postBeat } from '../services';
 const BeatContext = createContext(null);
+const Sound = require('react-native-sound');
+Sound.setCategory('Playback');
 
 export const BeatProvider = ({ children }) => {
+  /* Sounds!! */
+  const beep = new Sound('beep.mp3', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log('failed to load the sound', error);
+      return;
+    }
+    console.log('loaded sound successfully');
+  });
+
   const [beat, setBeat] = useState({});
   const [isTapped, setIsTapped] = useState(false);
   /* ---> variables for listen function <--- */
@@ -42,6 +53,7 @@ export const BeatProvider = ({ children }) => {
   return (
     <BeatContext.Provider
       value={{
+        beep,
         listen,
         reset,
         save,
