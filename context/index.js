@@ -11,10 +11,14 @@ const BeatContext = createContext({
   listen: () => {},
   reset: () => {},
   beat: {},
+  taps: [],
+  isTapped: false,
+  setIsTapped: () => {},
 });
 
 export const BeatProvider = ({ children }) => {
   const [beat, setBeat] = useState({});
+  const [isTapped, setIsTapped] = useState(false);
   /* ---> variables for listen function <--- */
   /* ---> using useRef to prevent rerendering(?) <--- */
   const tapNum = useRef(0);
@@ -32,12 +36,14 @@ export const BeatProvider = ({ children }) => {
       tapNum.current = 0;
       timeArr.current = [];
       taps.current = [];
+      setIsTapped(false);
       return true;
     }
   }
 
   return (
-    <BeatContext.Provider value={{ listen, reset, beat }}>
+    <BeatContext.Provider
+      value={{ listen, reset, beat, taps, isTapped, setIsTapped }}>
       {children}
     </BeatContext.Provider>
   );

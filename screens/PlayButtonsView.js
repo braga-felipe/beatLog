@@ -35,15 +35,9 @@ export default PlayButtonsView = ({ setIsPlay }) => {
   });
   return (
     <Animated.View style={[styles.container, container]}>
-      <Animated.View>
-        <PlayButton icon="save" />
-      </Animated.View>
-      <Animated.View>
-        <PlayButton icon="play" />
-      </Animated.View>
-      <Animated.View>
-        <PlayButton icon="close" setter={unmountContainer} />
-      </Animated.View>
+      <PlayButton icon="save" />
+      <PlayButton icon="play" />
+      <PlayButton icon="close" setter={unmountContainer} />
     </Animated.View>
   );
 };
