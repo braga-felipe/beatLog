@@ -50,6 +50,15 @@ export const BeatProvider = ({ children }) => {
     setBeat({});
     reset();
   }
+
+  function play() {
+    taps.current.forEach(tap => {
+      setTimeout(() => {
+        beep.play();
+        console.log(tap.diff);
+      }, tap.diff);
+    });
+  }
   return (
     <BeatContext.Provider
       value={{
@@ -57,6 +66,7 @@ export const BeatProvider = ({ children }) => {
         listen,
         reset,
         save,
+        play,
         taps,
         beat,
         setBeat,
