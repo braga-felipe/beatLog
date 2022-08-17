@@ -1,12 +1,15 @@
-import {Pressable, StyleSheet, Text} from 'react-native';
-import React, {useEffect} from 'react';
+import { Pressable, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-
-export default BeatItem = ({beat, backgroundColor, color, onPress, list}) => {
+import { getBeatTaps } from '../services';
+import { useBeatContext } from '../context';
+export default BeatItem = ({ beat, backgroundColor, color, onPress, list }) => {
+  const [taps, setTaps] = useState([]);
+  const { beep } = useBeatContext();
   const width = useSharedValue('0%');
   const pop = useAnimatedStyle(() => {
     return {
@@ -16,22 +19,34 @@ export default BeatItem = ({beat, backgroundColor, color, onPress, list}) => {
   function popItem() {
     setTimeout(() => {
       width.value = withSpring('98%');
-      //TODO: make sure this uses something other than the index
     }, 100 * list.indexOf(beat));
   }
+  async function getTaps() {
+    const res = await getBeatTaps(beat);
+    console.log({ res });
+    setTaps(res);
+  }
+  function play() {
+    taps.forEach(tap =>
+      setTimeout(() => {
+        beep.play();
+      }, tap.diff),
+    );
+  }
   useEffect(() => {
+    getTaps();
     popItem();
   }, []);
   return (
     <Animated.View style={[styles.container, pop]}>
       <Pressable
-        style={[styles.button, {backgroundColor}]}
+        style={[styles.button, { backgroundColor }]}
         onPress={() => {
           if (beat.beats) setIsPressed(!isPressed);
+          play();
           onPress();
         }}>
-        <Text style={[styles.text, {color}]}>{beat.name}</Text>
-        <Animated.View></Animated.View>
+        <Text style={[styles.text, { color }]}>{beat.name}</Text>
       </Pressable>
     </Animated.View>
   );

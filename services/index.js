@@ -29,6 +29,19 @@ export async function getCollectionBeats(coll) {
   return data;
 }
 
+export async function getBeatTaps(beat) {
+  let { data, error } = await supabase
+    .from('tap')
+    .select('*')
+    .eq('beat_id', beat.id);
+  if (error) {
+    console.log('ERROR GET TAPS', { error });
+    return 'ERROR FETCHING TAPS';
+  }
+  console.log('RES GET TAPS', { data });
+  return data;
+}
+
 export async function postBeat(beat) {
   const { name, taps } = beat;
   const { data, error } = await supabase.from('beat').insert([{ name: name }]);

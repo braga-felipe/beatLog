@@ -44,12 +44,11 @@ export const BeatProvider = ({ children }) => {
     setBeat({});
     reset();
   }
-
+  //TODO: refactor play function to use taps if passed
   function play(scale, cb, isPlay) {
     taps.current.forEach(tap => {
       setTimeout(() => {
-        dance(scale, cb, isPlay);
-        // beep.play();
+        isPlay ? dance(scale, cb, isPlay) : beep.play();
         // console.log(tap.diff);
       }, tap.diff);
     });
