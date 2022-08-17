@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useCallback,
-  useContext,
-  useRef,
-} from 'react';
+import React, { createContext, useState, useContext, useRef } from 'react';
 import { tapLogger } from '../helpers';
 import { postBeat } from '../services';
 const BeatContext = createContext(null);
@@ -51,14 +45,27 @@ export const BeatProvider = ({ children }) => {
     reset();
   }
 
-  function play() {
+  function play(scale, cb, isPlay) {
     taps.current.forEach(tap => {
       setTimeout(() => {
-        beep.play();
-        console.log(tap.diff);
+        dance(scale, cb, isPlay);
+        // beep.play();
+        // console.log(tap.diff);
       }, tap.diff);
     });
   }
+
+  function dance(scale, cb, isPlay) {
+    if (!isPlay) listen();
+    beep.play();
+    // to switch rendering of back button
+    setIsTapped(true);
+    scale.value = cb(0.85, { duration: 50 });
+    setTimeout(() => {
+      scale.value = cb(1, { duration: 50 });
+    }, 50);
+  }
+
   return (
     <BeatContext.Provider
       value={{
@@ -67,6 +74,7 @@ export const BeatProvider = ({ children }) => {
         reset,
         save,
         play,
+        dance,
         taps,
         beat,
         setBeat,

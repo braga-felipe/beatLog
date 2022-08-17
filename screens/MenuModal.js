@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -8,7 +8,7 @@ import Animated, {
 import MenuItem from '../components/MenuItem';
 
 export default MenuModal = props => {
-  const {onTouch, setIsLibrary, setIsPlay, isAnimated, setIsAnimated} = props;
+  const { onTouch, setIsLibrary, setIsPlay, isAnimated, setIsAnimated } = props;
 
   const modalBgColor = useSharedValue('#f7f7f7');
   const modalTop = useSharedValue('34%');
@@ -31,7 +31,7 @@ export default MenuModal = props => {
     };
   });
   const icons = useAnimatedStyle(() => {
-    return {opacity: iconOpacity.value};
+    return { opacity: iconOpacity.value };
   });
   function onAnimate() {
     if (!isAnimated) {
@@ -66,7 +66,7 @@ export default MenuModal = props => {
         />
         <MenuItem
           icon={require('../assets/play-icon.png')}
-          name="Play"
+          name="Create"
           setView={setIsPlay}
           {...buttonProps}
         />

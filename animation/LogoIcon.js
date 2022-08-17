@@ -6,15 +6,18 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useBeatContext } from '../context';
-
+import { useAnimationContext } from '../context/Animation.Provider';
 import MenuModal from '../screens/MenuModal';
 export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
-  const { listen, setIsTapped, beep } = useBeatContext();
+  const { dance } = useBeatContext();
+  const { scale } = useAnimationContext();
+  // TODO: refactor animation states to use context
+  // const scale = useSharedValue(0);
+
   const [isPressed, setIsPressed] = useState(false);
   const [isBlack, setIsBlack] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
-  const scale = useSharedValue(0);
   const top = useSharedValue('44%');
   const bgColor = useSharedValue('transparent');
   const reanimatedStyle = useAnimatedStyle(() => {
@@ -64,16 +67,16 @@ export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
     // switch isPressed on/off
     setIsPressed(!isPressed);
   }
-  function dance() {
-    beep.play();
-    listen();
-    // to switch rendering of back button
-    setIsTapped(true);
-    scale.value = withTiming(0.85, { duration: 50 });
-    setTimeout(() => {
-      scale.value = withTiming(1, { duration: 50 });
-    }, 50);
-  }
+  // function dance(scale) {
+  //   beep.play();
+  //   listen();
+  //   // to switch rendering of back button
+  //   setIsTapped(true);
+  //   scale.value = withTiming(0.85, { duration: 50 });
+  //   setTimeout(() => {
+  //     scale.value = withTiming(1, { duration: 50 });
+  //   }, 50);
+  // }
   // handles icon scale on mount
   useEffect(() => {
     // setTimeout to wait for ripples to load
@@ -85,7 +88,7 @@ export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
   return (
     <>
       <Animated.View style={[styles.animated, reanimatedStyle]}>
-        <Pressable onPress={isPlay ? dance : onTouch}>
+        <Pressable onPress={isPlay ? () => dance(scale, withTiming) : onTouch}>
           <Image
             source={
               isBlack

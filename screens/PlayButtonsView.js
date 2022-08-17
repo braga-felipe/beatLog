@@ -7,11 +7,13 @@ import Animated, {
 } from 'react-native-reanimated';
 import PlayButton from '../components/PlayButton';
 import { useBeatContext } from '../context';
+import { useAnimationContext } from '../context/Animation.Provider';
 import { useNavigation } from '@react-navigation/native';
 
 export default PlayButtonsView = ({ setIsPlay }) => {
   const navigation = useNavigation();
   const { reset, taps, setBeat, play } = useBeatContext();
+  const { scale, withTiming } = useAnimationContext();
   const bottom = useSharedValue('20%');
   const opacity = useSharedValue(0);
   const container = useAnimatedStyle(() => {
@@ -42,7 +44,7 @@ export default PlayButtonsView = ({ setIsPlay }) => {
   return (
     <Animated.View style={[styles.container, container]}>
       <PlayButton icon="save" setter={openModal} />
-      <PlayButton icon="play" setter={play} />
+      <PlayButton icon="play" setter={() => play(scale, withTiming, true)} />
       <PlayButton icon="close" setter={unmountContainer} />
     </Animated.View>
   );
