@@ -1,14 +1,14 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import BeatList from '../components/BeatList';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import {getBeats, getCollections} from '../services';
+import { getBeats, getCollections } from '../services';
 
-export default Library = ({setIsLibrary}) => {
+export default Library = ({ setIsLibrary }) => {
   const [beatlist, setBeatlist] = useState([]);
   const [collectionList, setCollectionList] = useState([]);
   const opacity = useSharedValue(1);
@@ -49,7 +49,10 @@ export default Library = ({setIsLibrary}) => {
           alignItems: 'center',
         }}>
         <Pressable onPress={close}>
-          <Image source={require('../assets/back.png')} style={styles.image} />
+          <Image
+            source={require('../assets/go-back.png')}
+            style={styles.image}
+          />
         </Pressable>
       </View>
     </Animated.View>

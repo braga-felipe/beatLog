@@ -6,15 +6,8 @@ import React, {
   useRef,
 } from 'react';
 import { tapLogger } from '../helpers';
-
-const BeatContext = createContext({
-  listen: () => {},
-  reset: () => {},
-  beat: {},
-  taps: [],
-  isTapped: false,
-  setIsTapped: () => {},
-});
+import { postBeat } from '../services';
+const BeatContext = createContext(null);
 
 export const BeatProvider = ({ children }) => {
   const [beat, setBeat] = useState({});
@@ -41,9 +34,23 @@ export const BeatProvider = ({ children }) => {
     }
   }
 
+  function save(beat) {
+    postBeat(beat);
+    setBeat({});
+    reset();
+  }
   return (
     <BeatContext.Provider
-      value={{ listen, reset, beat, taps, isTapped, setIsTapped }}>
+      value={{
+        listen,
+        reset,
+        save,
+        taps,
+        beat,
+        setBeat,
+        isTapped,
+        setIsTapped,
+      }}>
       {children}
     </BeatContext.Provider>
   );

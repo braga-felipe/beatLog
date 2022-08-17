@@ -9,7 +9,7 @@ import Animated, {
 
 export default PlayButton = ({ icon, setter }) => {
   const size = icon === 'play' ? 80 : 65;
-  const top = icon === 'play' ? 0 : 20;
+  const top = icon === 'play' ? 0 : 15;
   const { isTapped } = useBeatContext();
   const scale = useSharedValue(0.5);
   const hidden = useSharedValue(0.5);
@@ -46,7 +46,9 @@ export default PlayButton = ({ icon, setter }) => {
         onPress={() => {
           if (icon === 'close') {
             setter();
-          } else setter(false);
+          } else {
+            if (isTapped) setter();
+          }
         }}>
         {
           <Image
