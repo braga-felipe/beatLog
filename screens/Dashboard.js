@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {View} from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+
 /* components imports */
 import Background from '../components/Background';
 import LogoIcon from '../animation/LogoIcon';
@@ -19,7 +20,8 @@ export default Dashboard = () => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'black'}}>
+    <View
+      style={{ flex: 1, justifyContent: 'center', backgroundColor: 'black' }}>
       {isLibrary ? (
         <>
           {/* User's Space */}
@@ -32,7 +34,7 @@ export default Dashboard = () => {
           <LogoIcon {...props} />
           {isPlay && (
             <>
-              {/* TODO: Buttons to manage Play */}
+              {/* Buttons to manage Play */}
               <PlayButtonsView isPlay={isPlay} setIsPlay={setIsPlay} />
             </>
           )}

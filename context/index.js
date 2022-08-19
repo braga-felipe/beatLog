@@ -7,12 +7,29 @@ Sound.setCategory('Playback');
 
 export const BeatProvider = ({ children }) => {
   /* Sounds!! */
-  const beep = new Sound('beep.mp3', Sound.MAIN_BUNDLE, error => {
+
+  const kick = new Sound('kick.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
-      console.log('failed to load the sound', error);
+      console.log('failed to load kick', error);
       return;
     }
-    console.log('loaded sound successfully');
+    // kick.play();
+    console.log('loaded kick successfully');
+  });
+  const welcome = new Sound('opening-cymbal.wav', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log('failed to load opening cymbal', error);
+      return;
+    }
+    // welcome.play();
+    console.log('loaded opening cymbal successfully');
+  });
+  const beep = new Sound('beep.mp3', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log('failed to load beep', error);
+      return;
+    }
+    console.log('loaded beep successfully');
   });
 
   const [beat, setBeat] = useState({});
@@ -69,6 +86,7 @@ export const BeatProvider = ({ children }) => {
     <BeatContext.Provider
       value={{
         beep,
+        welcome,
         listen,
         reset,
         save,

@@ -5,10 +5,12 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/native';
 import { getBeatTaps } from '../services';
 import { useBeatContext } from '../context';
 export default BeatItem = ({ beat, backgroundColor, color, onPress, list }) => {
   const [taps, setTaps] = useState([]);
+  const navigation = useNavigation();
   const { beep } = useBeatContext();
   const width = useSharedValue('0%');
   const pop = useAnimatedStyle(() => {
@@ -43,7 +45,8 @@ export default BeatItem = ({ beat, backgroundColor, color, onPress, list }) => {
         style={[styles.button, { backgroundColor }]}
         onPress={() => {
           if (beat.beats) setIsPressed(!isPressed);
-          play();
+          // play();
+          navigation.navigate('EditBeat', { beat });
           onPress();
         }}>
         <Text style={[styles.text, { color }]}>{beat.name}</Text>

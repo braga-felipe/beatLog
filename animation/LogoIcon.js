@@ -67,16 +67,7 @@ export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
     // switch isPressed on/off
     setIsPressed(!isPressed);
   }
-  // function dance(scale) {
-  //   beep.play();
-  //   listen();
-  //   // to switch rendering of back button
-  //   setIsTapped(true);
-  //   scale.value = withTiming(0.85, { duration: 50 });
-  //   setTimeout(() => {
-  //     scale.value = withTiming(1, { duration: 50 });
-  //   }, 50);
-  // }
+
   // handles icon scale on mount
   useEffect(() => {
     // setTimeout to wait for ripples to load
