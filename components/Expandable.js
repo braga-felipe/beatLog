@@ -1,12 +1,12 @@
-import {FlatList, Pressable, StyleSheet, Text} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { FlatList, Pressable, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import {getCollectionBeats} from '../services';
+import { getCollectionBeats } from '../services';
 
 export default Expandable = ({
   collection,
@@ -46,7 +46,7 @@ export default Expandable = ({
       //TODO: make sure this uses something other than the index
     }, 100 * list.indexOf(collection));
   }
-  
+
   function expand() {
     addBeats();
     if (!isPressed) {
@@ -66,20 +66,22 @@ export default Expandable = ({
     }
     setIsPressed(!isPressed);
   }
+
   async function addBeats() {
     if (!beats.length) {
       const res = await getCollectionBeats(collection);
-      console.log({res});
+      console.log({ res });
       setBeats(res);
     }
   }
   useEffect(() => {
     popItem();
   }, []);
+
   return (
     <Animated.View style={[styles.container, pop]}>
       <Pressable
-        style={[styles.button, {backgroundColor}]}
+        style={[styles.button, { backgroundColor }]}
         onPress={() => {
           setTimeout(
             () => {
@@ -89,12 +91,14 @@ export default Expandable = ({
             !beats.length ? 250 : 0,
           );
         }}>
-        <Text style={[beatStyle, styles.text, {color}]}>{collection.name}</Text>
+        <Text style={[beatStyle, styles.text, { color }]}>
+          {collection.name}
+        </Text>
       </Pressable>
       <Animated.View style={[styles.expandable, expandable]}>
         <FlatList
           data={beats}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <Text
               style={{
                 left: '3%',
@@ -103,6 +107,7 @@ export default Expandable = ({
                 fontWeight: 'bold',
               }}>
               {item.name}
+              {item.id}
             </Text>
           )}
         />
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
   },
   expandable: {
     borderRadius: 3,
-    left: '1.3%',
+    left: '1.25%',
     top: 35,
     position: 'absolute',
     width: '99.5%',

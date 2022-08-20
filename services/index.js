@@ -55,11 +55,11 @@ export async function postBeat(beat) {
 }
 
 export async function postTaps(taps, beatId) {
-  taps.forEach(async tap => {
+  taps.forEach(async (tap, index) => {
     const { diff } = tap;
     const { data, error } = await supabase
       .from('tap')
-      .insert([{ diff, beat_id: beatId }]);
+      .insert([{ name: `tap-${index}`, diff, beat_id: beatId }]);
     if (error) {
       console.log('POST ERROR: ', { error });
     }

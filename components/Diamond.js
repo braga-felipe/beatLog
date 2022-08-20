@@ -6,18 +6,17 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useBeatContext } from '../context';
-import { useAnimationContext } from '../context/Animation.Provider';
 import MenuModal from '../screens/MenuModal';
-export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
-  const { dance } = useBeatContext();
-  const { scale } = useAnimationContext();
-  // TODO: refactor animation states to use context
-  // const scale = useSharedValue(0);
 
+export default Diamond = ({ setIsLibrary, setIsPlay, isPlay }) => {
+  const { dance } = useBeatContext();
   const [isPressed, setIsPressed] = useState(false);
   const [isBlack, setIsBlack] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
+
+  /* Animation variables */
+  const scale = useSharedValue(0);
   const top = useSharedValue('44%');
   const bgColor = useSharedValue('transparent');
   const reanimatedStyle = useAnimatedStyle(() => {
@@ -27,6 +26,8 @@ export default LogoIcon = ({ setIsLibrary, setIsPlay, isPlay }) => {
       transform: [{ scale: scale.value }],
     };
   });
+
+  // TODO: refactor modal to use React Native's Modal
   const modalProps = {
     isPlay,
     setIsLibrary,

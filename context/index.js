@@ -5,47 +5,48 @@ const BeatContext = createContext(null);
 const Sound = require('react-native-sound');
 Sound.setCategory('Playback');
 
+/* Sounds!! */
+const kick = new Sound('kick.wav', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load kick', error);
+    return;
+  }
+  // kick.play();
+  console.log('loaded kick successfully');
+});
+const welcome = new Sound('opening-cymbal.wav', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load opening cymbal', error);
+    return;
+  }
+  // welcome.play();
+  console.log('loaded opening cymbal successfully');
+});
+const beep = new Sound('beep.mp3', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load beep', error);
+    return;
+  }
+  console.log('loaded beep successfully');
+});
+
 export const BeatProvider = ({ children }) => {
-  /* Sounds!! */
-
-  const kick = new Sound('kick.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      console.log('failed to load kick', error);
-      return;
-    }
-    // kick.play();
-    console.log('loaded kick successfully');
-  });
-  const welcome = new Sound('opening-cymbal.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      console.log('failed to load opening cymbal', error);
-      return;
-    }
-    // welcome.play();
-    console.log('loaded opening cymbal successfully');
-  });
-  const beep = new Sound('beep.mp3', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      console.log('failed to load beep', error);
-      return;
-    }
-    console.log('loaded beep successfully');
-  });
-
   const [beat, setBeat] = useState({});
   const [isTapped, setIsTapped] = useState(false);
-  /* ---> variables for listen function <--- */
-  /* ---> using useRef to prevent rerendering(?) <--- */
+
+  /* ---> Variables for listen function <--- */
   const tapNum = useRef(0);
   const timeArr = useRef([]);
   const taps = useRef([]);
 
+  /* Function to log taps */
   function listen() {
     tapLogger(tapNum.current, timeArr.current, taps.current);
     tapNum.current += 1;
     console.log('taps:', taps.current);
   }
 
+  /* Function to reset current taps state*/
   function reset() {
     if (taps.current.length) {
       tapNum.current = 0;
@@ -55,27 +56,35 @@ export const BeatProvider = ({ children }) => {
       return true;
     }
   }
-
+  /* POST beat and reset the state */
   function save(beat) {
     postBeat(beat);
     setBeat({});
     reset();
   }
+
   //TODO: refactor play function to use taps if passed
   function play(scale, cb, isPlay) {
     taps.current.forEach(tap => {
       setTimeout(() => {
         isPlay ? dance(scale, cb, isPlay) : beep.play();
-        // console.log(tap.diff);
       }, tap.diff);
     });
   }
 
+  /* Diamond dance function 
+    - takes Animation variabes (scale and withTiming cb)
+    - isPlay Boolean to control log of taps
+  */
   function dance(scale, cb, isPlay) {
+    /* If is not playback, log taps */
     if (!isPlay) listen();
+    /* TODO: add a switch to either play or not during listen
+        i.e. if(soundSwitch) */
     beep.play();
-    // to switch rendering of back button
+    /* Controls rendering of back/close button */
     setIsTapped(true);
+    /* Dance animation */
     scale.value = cb(0.85, { duration: 50 });
     setTimeout(() => {
       scale.value = cb(1, { duration: 50 });

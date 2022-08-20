@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 
 /* components imports */
-import Background from '../components/Background';
-import LogoIcon from '../animation/LogoIcon';
+import BackgroundPulse from '../components/BackgroundPulse';
+import Diamond from '../components/Diamond';
 import Library from '../screens/Library';
 import PlayButtonsView from '../screens/PlayButtonsView';
 
@@ -30,8 +30,8 @@ export default Dashboard = () => {
       ) : (
         <>
           {/* Dashboard Screen */}
-          <Background />
-          <LogoIcon {...props} />
+          <BackgroundPulse />
+          <Diamond {...props} />
           {isPlay && (
             <>
               {/* Buttons to manage Play */}

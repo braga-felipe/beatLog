@@ -7,13 +7,16 @@ import Animated, {
 } from 'react-native-reanimated';
 import PlayButton from '../components/PlayButton';
 import { useBeatContext } from '../context';
-import { useAnimationContext } from '../context/Animation.Provider';
 import { useNavigation } from '@react-navigation/native';
 
 export default PlayButtonsView = ({ setIsPlay }) => {
   const navigation = useNavigation();
+
+  /* Beat state */
   const { reset, taps, setBeat, play } = useBeatContext();
-  const { scale, withTiming } = useAnimationContext();
+
+  /* Animation variables */
+  const scale = useSharedValue(0);
   const bottom = useSharedValue('20%');
   const opacity = useSharedValue(0);
   const container = useAnimatedStyle(() => {
@@ -22,7 +25,16 @@ export default PlayButtonsView = ({ setIsPlay }) => {
       opacity: opacity.value,
     };
   });
-  function unmountContainer() {
+
+  /* Mount Component */
+  function open() {
+    bottom.value = withTiming('35%');
+    opacity.value = withTiming(1);
+  }
+
+  /* Unmount Component */
+  function close() {
+    /* Close Component only when there are no taps recorded */
     if (!reset()) {
       opacity.value = withTiming(0);
       setTimeout(() => {
@@ -30,22 +42,21 @@ export default PlayButtonsView = ({ setIsPlay }) => {
       }, 200);
     }
   }
-  function mountContainer() {
-    bottom.value = withTiming('35%');
-    opacity.value = withTiming(1);
-  }
-  function openModal() {
+
+  /* Update beat state and  open modal */
+  function openSaveModal() {
     setBeat({ taps: taps.current });
     navigation.navigate('Save');
   }
+
   useEffect(() => {
-    setTimeout(() => mountContainer(), 450);
+    setTimeout(() => open(), 450);
   });
   return (
     <Animated.View style={[styles.container, container]}>
-      <PlayButton icon="save" setter={openModal} />
+      <PlayButton icon="save" setter={openSaveModal} />
       <PlayButton icon="play" setter={() => play(scale, withTiming, true)} />
-      <PlayButton icon="close" setter={unmountContainer} />
+      <PlayButton icon="close" setter={close} />
     </Animated.View>
   );
 };

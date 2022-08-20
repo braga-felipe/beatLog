@@ -1,52 +1,54 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { FlatList, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import BeatItem from './BeatItem';
-import Expandable from './Expandable';
-export default BeatList = ({name, list}) => {
+import ListItem from './ListItem';
+
+/* Dynamic list to render all types of data*/
+export default List = ({ name, list }) => {
+  /* Sort list for display */
+  list = list.sort((a, b) => a.diff - b.diff);
+
+  /* State to control render of selected item */
   const [selectedId, setSelectedId] = useState(null);
 
+  /* Animation variables */
   const opacity = useSharedValue(0);
-  const animateContainer = useAnimatedStyle(() => {
+  const animated = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
     };
   });
-  function render({item}) {
-    const renderProps = {
-      list,
+
+  /* Mount Component */
+  function open() {
+    setTimeout(() => (opacity.value = withTiming(1)), 200);
+  }
+
+  /* Render fucntion for FlatList */
+  function render({ item, index }) {
+    /* props for selected item */
+    const props = {
+      item,
+      index,
       backgroundColor: selectedId === item.id ? '#303134' : '#C7C7C7',
       color: selectedId === item.id ? 'white' : 'black',
+      select: () => setSelectedId(item.id),
     };
-
-    return name === 'Beats' ? (
-      <BeatItem
-        beat={item}
-        {...renderProps}
-        onPress={() => setSelectedId(item.id)}
-      />
-    ) : (
-      <Expandable
-        collection={item}
-        {...renderProps}
-        onPress={() => setSelectedId(item.id)}
-      />
-    );
+    return <ListItem {...props} />;
   }
+
   useEffect(() => {
-    setTimeout(() => {
-      opacity.value = withTiming(1);
-    }, 200);
-    return () => (opacity.value = 0);
+    open();
   }, []);
+
   return (
     <>
-      {name && <Text style={styles.text}>{name}</Text>}
-      <Animated.View style={[styles.container, animateContainer]}>
+      <Text style={styles.text}>{name}</Text>
+      <Animated.View style={[styles.container, animated]}>
         <FlatList
           data={list}
           renderItem={render}
