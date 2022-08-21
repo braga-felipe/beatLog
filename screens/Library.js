@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    top: '5%',
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',

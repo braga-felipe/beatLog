@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { getBeatTaps } from '../services';
 import List from '../components/List';
 import BackgroundImage from '../components/BackgroundImage';
-
+import EditControl from '../components/EditControl';
 export default EditBeat = ({ route, navigation }) => {
   /* get the beat from params */
   const { beat } = route.params;
@@ -26,6 +26,7 @@ export default EditBeat = ({ route, navigation }) => {
     <BackgroundImage source={require('../assets/edit-bg.jpg')}>
       <Text style={styles.text}>{beat.name}</Text>
       <List name="Taps" list={taps} />
+      <EditControl />
       <View style={styles.buttonContainer}>
         <Pressable onPress={() => navigation.goBack()}>
           <Image
@@ -40,7 +41,8 @@ export default EditBeat = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    top: '50%',
+    position: 'absolute',
+    top: '83.5%',
     backgroundColor: 'white',
     borderRadius: 50,
     width: '20%',
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 'bold',
   },
 });
