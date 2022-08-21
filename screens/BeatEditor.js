@@ -14,7 +14,6 @@ export default EditBeat = ({ route, navigation }) => {
   /* function to get taps from database */
   async function getTaps() {
     const res = await getBeatTaps(beat);
-    console.log('TAPS IN EDIT: ', res);
     setTaps(res);
   }
 
@@ -41,6 +40,7 @@ export default EditBeat = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    top: '50%',
     backgroundColor: 'white',
     borderRadius: 50,
     width: '20%',

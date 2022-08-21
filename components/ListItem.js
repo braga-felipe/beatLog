@@ -1,13 +1,23 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { useBeatContext } from '../context/';
-export default ListItem = ({ item, backgroundColor, color, select, index }) => {
+import Expandable from './Expandable';
+
+export default ListItem = ({
+  item,
+  backgroundColor,
+  color,
+  select,
+  index,
+  selectedId,
+}) => {
   /* Navigation for Beats and Collections */
   const navigation = useNavigation();
 
@@ -15,12 +25,18 @@ export default ListItem = ({ item, backgroundColor, color, select, index }) => {
   const { beep } = useBeatContext();
 
   /* Animation variables */
+  const [isPressed, setIsPressed] = useState(false);
+
+  // refactor for list
   const width = useSharedValue('0%');
+  const margin = useSharedValue('0%');
   const animated = useAnimatedStyle(() => {
     return {
       width: width.value,
+      marginBottom: margin.value,
     };
   });
+
   function popUp() {
     /* use diff in setTimeout in case list is Taps */
     const { diff } = item;
@@ -35,20 +51,52 @@ export default ListItem = ({ item, backgroundColor, color, select, index }) => {
     );
   }
 
-  useEffect(() => popUp(), []);
+  function press() {
+    /* changes item theme when selected */
+    select();
+    if (selectedId === item.id) {
+      /* navigate to editor is item is beat*/
+      if (item.isBeat) return navigation.navigate('BeatEditor', { beat: item });
+
+      if (isPressed) {
+        console.log('isPressed and extended so unextended');
+        margin.value = withTiming('0%');
+        setTimeout(() => {
+          setIsPressed(false);
+        }, 300);
+      } else {
+        /* if it's selected increase margin */
+        margin.value = withTiming('20%');
+        /* handle rendering of expandable*/
+        setIsPressed(true);
+      }
+    } else {
+      margin.value = withTiming('0%');
+    }
+  }
+
+  useEffect(() => {
+    popUp();
+    if (selectedId !== item.id) margin.value = withTiming('0%');
+  }, [selectedId]);
+
   return (
-    <Animated.View style={[styles.container, animated]}>
-      <Pressable
-        style={[styles.button, { backgroundColor }]}
-        onPress={() => {
-          /* changes item theme when selected */
-          select();
-          if (item.isBeat) navigation.navigate('BeatEditor', { beat: item });
-          //TODO: create expandable for Taps and Collections
-        }}>
-        <Text style={[styles.text, { color }]}>{item.name}</Text>
-      </Pressable>
-    </Animated.View>
+    <>
+      <Animated.View style={[styles.container, animated]}>
+        <Pressable style={[styles.button, { backgroundColor }]} onPress={press}>
+          <Text style={[styles.text, { color }]}>{item.name}</Text>
+        </Pressable>
+      </Animated.View>
+      {isPressed && (
+        <Expandable
+          data={item}
+          backgroundColor={backgroundColor}
+          color={color}
+          selectedId={selectedId}
+          margin={margin}
+        />
+      )}
+    </>
   );
 };
 

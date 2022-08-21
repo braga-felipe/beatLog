@@ -38,7 +38,6 @@ export async function getBeatTaps(beat) {
     console.log('ERROR GET TAPS', { error });
     return 'ERROR FETCHING TAPS';
   }
-  console.log('RES GET TAPS', { data });
   return data;
 }
 
@@ -49,7 +48,6 @@ export async function postBeat(beat) {
     console.log('POST ERROR: ', { error });
     return error;
   }
-  console.log('POST:', { data });
   await postTaps(taps, data[0].id);
   return data;
 }
@@ -63,7 +61,6 @@ export async function postTaps(taps, beatId) {
     if (error) {
       console.log('POST ERROR: ', { error });
     }
-    console.log('POST:', { data });
   });
   console.log('ALL BEATS POSTED');
 }

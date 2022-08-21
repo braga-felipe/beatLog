@@ -15,7 +15,7 @@ export default List = ({ name, list }) => {
   /* State to control render of selected item */
   const [selectedId, setSelectedId] = useState(null);
 
-  /* Animation variables */
+  /* Animation variables for list */
   const opacity = useSharedValue(0);
   const animated = useAnimatedStyle(() => {
     return {
@@ -34,9 +34,13 @@ export default List = ({ name, list }) => {
     const props = {
       item,
       index,
+      selectedId,
       backgroundColor: selectedId === item.id ? '#303134' : '#C7C7C7',
       color: selectedId === item.id ? 'white' : 'black',
-      select: () => setSelectedId(item.id),
+      select: () => {
+        /* When selected change color */
+        setSelectedId(item.id);
+      },
     };
     return <ListItem {...props} />;
   }
