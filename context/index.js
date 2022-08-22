@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useRef } from 'react';
 import { tapLogger } from '../helpers';
 import { postBeat } from '../services';
 const BeatContext = createContext(null);
+import { useSharedValue } from 'react-native-reanimated';
 const Sound = require('react-native-sound');
 Sound.setCategory('Playback');
 
@@ -39,6 +40,9 @@ export const BeatProvider = ({ children }) => {
   const timeArr = useRef([]);
   const taps = useRef([]);
 
+  /* Scale context for Diamond */
+  const scale = useSharedValue(0);
+
   /* Function to log taps */
   function listen() {
     tapLogger(tapNum.current, timeArr.current, taps.current);
@@ -67,7 +71,7 @@ export const BeatProvider = ({ children }) => {
   function play(scale, cb, isPlay) {
     taps.current.forEach(tap => {
       setTimeout(() => {
-        isPlay ? dance(scale, cb, isPlay) : beep.play();
+        dance(scale, cb, isPlay);
       }, tap.diff);
     });
   }
@@ -106,6 +110,7 @@ export const BeatProvider = ({ children }) => {
         setBeat,
         isTapped,
         setIsTapped,
+        scale,
       }}>
       {children}
     </BeatContext.Provider>

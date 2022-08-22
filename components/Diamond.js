@@ -9,14 +9,14 @@ import { useBeatContext } from '../context';
 import MenuModal from '../screens/MenuModal';
 
 export default Diamond = ({ setIsLibrary, setIsPlay, isPlay }) => {
-  const { dance } = useBeatContext();
+  const { dance, scale } = useBeatContext();
   const [isPressed, setIsPressed] = useState(false);
   const [isBlack, setIsBlack] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
 
   /* Animation variables */
-  const scale = useSharedValue(0);
+  // scale from context
   const top = useSharedValue('44%');
   const bgColor = useSharedValue('transparent');
   const reanimatedStyle = useAnimatedStyle(() => {

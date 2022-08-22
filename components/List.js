@@ -8,7 +8,7 @@ import Animated, {
 import ListItem from './ListItem';
 
 /* Dynamic list to render all types of data*/
-export default List = ({ name, list }) => {
+export default List = ({ name, list, setSelectedTap }) => {
   /* Sort list for display */
   list = list.sort((a, b) => a.diff - b.diff);
 
@@ -40,6 +40,7 @@ export default List = ({ name, list }) => {
       select: () => {
         /* When selected change color */
         setSelectedId(item.id);
+        if (item.isTap) setSelectedTap(item);
       },
     };
     return <ListItem {...props} />;

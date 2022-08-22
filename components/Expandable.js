@@ -61,7 +61,7 @@ export default Expandable = ({ data, backgroundColor, color, selectedId }) => {
     let text;
     if (data.isTap) {
       /* If index is 0, then render Volume else render Sound */
-      if (!index) text = `Volume: ${item.name}`;
+      if (!index) text = `Volume: ${item.name * 10}`;
       else text = `Sound: ${item.name}`;
     } else {
       /* If data is Collection, then render item's name */
