@@ -1,9 +1,8 @@
-import { Pressable, StyleSheet, TextInput, Text, View } from 'react-native';
+import { StyleSheet, TextInput, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { useBeatContext } from '../context';
+import SaveButtons from '../components/SaveButtons';
 
-const SaveModal = ({ navigation }) => {
-  const { beat, save } = useBeatContext();
+export default SaveModal = ({ navigation }) => {
   const [beatName, setBeatName] = useState('');
 
   return (
@@ -16,24 +15,10 @@ const SaveModal = ({ navigation }) => {
         placeholder="Choose a name"
         autoFocus={true}
       />
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            save({ ...beat, name: beatName });
-            navigation.goBack();
-          }}>
-          <Text style={styles.text}>Save</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={navigation.goBack}>
-          <Text style={styles.text}>Cancel</Text>
-        </Pressable>
-      </View>
+      <SaveButtons goBack={navigation.goBack} beatName={beatName} />
     </View>
   );
 };
-
-export default SaveModal;
 
 const styles = StyleSheet.create({
   container: {

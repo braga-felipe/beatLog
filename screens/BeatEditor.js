@@ -10,7 +10,7 @@ export default EditBeat = ({ route, navigation }) => {
 
   /* state to render taps */
   const [taps, setTaps] = useState([]);
-
+  const [selectedTap, setSelectedTap] = useState({});
   /* function to get taps from database */
   async function getTaps() {
     const res = await getBeatTaps(beat);
@@ -25,8 +25,8 @@ export default EditBeat = ({ route, navigation }) => {
   return (
     <BackgroundImage source={require('../assets/edit-bg.jpg')}>
       <Text style={styles.text}>{beat.name}</Text>
-      <List name="Taps" list={taps} />
-      <EditControl />
+      <List name="Taps" list={taps} setSelectedTap={setSelectedTap} />
+      <EditControl selectedTap={selectedTap} setSelectedTap={setSelectedTap} />
       <View style={styles.buttonContainer}>
         <Pressable onPress={() => navigation.goBack()}>
           <Image
@@ -42,7 +42,7 @@ export default EditBeat = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
-    top: '83.5%',
+    top: '95.5%',
     backgroundColor: 'white',
     borderRadius: 50,
     width: '20%',

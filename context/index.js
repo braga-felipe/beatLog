@@ -67,7 +67,7 @@ export const BeatProvider = ({ children }) => {
   function play(scale, cb, isPlay) {
     taps.current.forEach(tap => {
       setTimeout(() => {
-        isPlay ? dance(scale, cb, isPlay) : beep.play();
+        dance(scale, cb, isPlay);
       }, tap.diff);
     });
   }
