@@ -13,10 +13,10 @@ export default PlayButtonsView = ({ setIsPlay }) => {
   const navigation = useNavigation();
 
   /* Beat state */
-  const { reset, taps, setBeat, play } = useBeatContext();
+  const { reset, taps, setBeat, play, scale } = useBeatContext();
 
   /* Animation variables */
-  const scale = useSharedValue(0);
+  // const scale = useSharedValue(0);
   const bottom = useSharedValue('20%');
   const opacity = useSharedValue(0);
   const container = useAnimatedStyle(() => {
