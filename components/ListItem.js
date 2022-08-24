@@ -22,7 +22,7 @@ export default ListItem = ({
   const navigation = useNavigation();
 
   /* Sounds */
-  const { beep } = useBeatContext();
+  const { beep, sounds } = useBeatContext();
 
   /* Animation variables */
   const [isPressed, setIsPressed] = useState(false);
@@ -40,10 +40,14 @@ export default ListItem = ({
   function popUp() {
     /* use diff in setTimeout in case list is Taps */
     const { diff } = item;
-    // TODO: use different animation for taps
     setTimeout(
       () => {
-        if (item.isTap) beep.play();
+        if (item.isTap) {
+          const sound = sounds[item.sound];
+          sound.stop();
+          sound.setVolume(item.volume);
+          sound.play();
+        }
         width.value = withSpring('98%');
       },
       /* if not taps, use item's index */

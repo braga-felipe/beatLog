@@ -6,11 +6,15 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import { updateTap } from '../services';
+import EditorButtons from '../components/EditorButtons';
 export default EditControl = ({ selectedTap, setSelectedTap }) => {
-  const [volume, setVolume] = useState('');
+  const [volume, setVolume] = useState(null);
   const [sound, setSound] = useState('-');
-
+  const buttonProps = {
+    selectedTap,
+    volume,
+    sound,
+  };
   function update() {
     if (selectedTap !== undefined) {
       setVolume(selectedTap.volume * 10);
@@ -24,12 +28,17 @@ export default EditControl = ({ selectedTap, setSelectedTap }) => {
         <Text style={styles.text}>Volume: {volume ? volume : 0}</Text>
         <MultiSlider
           values={[volume ? volume : 0]}
-          onValuesChange={setVolume}
+          onValuesChange={v => setVolume(v[0])}
         />
       </View>
       <View style={styles.controlContainer}>
         <Text style={styles.text}>Sound: {sound}</Text>
       </View>
+      {/* {selectedTap.volume * 10 !== volume && ( */}
+      <Animated.View style={styles.buttonContainer}>
+        <EditorButtons {...buttonProps} />
+      </Animated.View>
+      {/* )} */}
     </Animated.View>
   );
 };
@@ -37,26 +46,31 @@ export default EditControl = ({ selectedTap, setSelectedTap }) => {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 3,
-    height: '45%',
+    height: '40%',
     width: '95%',
-    marginTop: '17.5%',
-    backgroundColor: '#f7f7f7',
+    marginVertical: '15.5%',
+    backgroundColor: 'black',
+    // backgroundColor: '#f7f7f7',
   },
   text: {
-    color: 'black',
+    color: '#f7f7f7',
     fontSize: 25,
     fontWeight: 'bold',
     alignSelf: 'center',
   },
   controlContainer: {
     top: '2.5%',
-    backgroundColor: '#C7C7C7',
+    backgroundColor: '#303134',
     borderRadius: 3,
     marginVertical: '2%',
     height: '30%',
     width: '95%',
     alignSelf: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    marginTop: '12.5%',
     alignItems: 'center',
   },
 });

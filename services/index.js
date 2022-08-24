@@ -70,6 +70,7 @@ export async function getBeatTaps(beat) {
 /* UPDATE */
 
 export async function updateTap(tap) {
+  console.log('UPDATE TAP', { tap });
   const { data, error } = await supabase
     .from('tap')
     .update({ ...tap })

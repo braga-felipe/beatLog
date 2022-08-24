@@ -4,6 +4,8 @@ import { getBeatTaps } from '../services';
 import List from '../components/List';
 import BackgroundImage from '../components/BackgroundImage';
 import EditControl from '../components/EditControl';
+import SaveButtons from '../components/SaveButtons';
+
 export default EditBeat = ({ route, navigation }) => {
   /* get the beat from params */
   const { beat } = route.params;

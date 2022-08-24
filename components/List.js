@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -11,7 +11,9 @@ import ListItem from './ListItem';
 export default List = ({ name, list, setSelectedTap }) => {
   /* Sort list for display */
   list = list.sort((a, b) => a.diff - b.diff);
-
+  /* State to control scroll to end */
+  const scrollRef = useRef(0);
+  const listRef = useRef(null);
   /* State to control render of selected item */
   const [selectedId, setSelectedId] = useState(null);
 
@@ -43,13 +45,16 @@ export default List = ({ name, list, setSelectedTap }) => {
         if (item.isTap) setSelectedTap(item);
       },
     };
+
     return <ListItem {...props} />;
   }
 
   useEffect(() => {
+    listRef.current = list;
+    console.log('LIST: ', listRef.current);
+
     open();
   }, []);
-
   return (
     <>
       <Text style={styles.text}>{name}</Text>
@@ -58,6 +63,11 @@ export default List = ({ name, list, setSelectedTap }) => {
           data={list}
           renderItem={render}
           keyExtractor={item => item.id}
+          ref={it => (scrollRef.current = it)}
+          onContentSizeChange={(_, height) => {
+            if (listRef.current.isTap && height > 355)
+              scrollRef.current?.scrollToEnd({ animated: true });
+          }}
         />
       </Animated.View>
     </>
@@ -66,6 +76,7 @@ export default List = ({ name, list, setSelectedTap }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginBottom: 10,
     borderRadius: 5,
     height: '30%',

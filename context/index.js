@@ -31,6 +31,12 @@ const beep = new Sound('beep.mp3', Sound.MAIN_BUNDLE, error => {
   console.log('loaded beep successfully');
 });
 
+const sounds = {
+  kick,
+  beep,
+  welcome,
+};
+
 export const BeatProvider = ({ children }) => {
   const [beat, setBeat] = useState({});
   const [isTapped, setIsTapped] = useState(false);
@@ -71,7 +77,7 @@ export const BeatProvider = ({ children }) => {
   function play(scale, cb, isPlay) {
     taps.current.forEach(tap => {
       setTimeout(() => {
-        dance(scale, cb, isPlay);
+        dance(scale, cb, isPlay, sounds[tap.sound]);
       }, tap.diff);
     });
   }
@@ -80,12 +86,12 @@ export const BeatProvider = ({ children }) => {
     - takes Animation variabes (scale and withTiming cb)
     - isPlay Boolean to control log of taps
   */
-  function dance(scale, cb, isPlay) {
+  function dance(scale, cb, isPlay, sound) {
     /* If is not playback, log taps */
     if (!isPlay) listen();
     /* TODO: add a switch to either play or not during listen
         i.e. if(soundSwitch) */
-    beep.play();
+    sound ? sound.play() : beep.play();
     /* Controls rendering of back/close button */
     setIsTapped(true);
     /* Dance animation */
@@ -100,6 +106,8 @@ export const BeatProvider = ({ children }) => {
       value={{
         beep,
         welcome,
+        kick,
+        sounds,
         listen,
         reset,
         save,

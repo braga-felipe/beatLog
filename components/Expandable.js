@@ -70,7 +70,9 @@ export default Expandable = ({ data, backgroundColor, color, selectedId }) => {
     //TODO: create expandable item
     return (
       <Animated.View style={selectable}>
-        <Text style={[styles.text, { color }]}>{text}</Text>
+        <Pressable onPress={() => console.log('EXPANDABLE')}>
+          <Text style={[styles.text, { color }]}>{text}</Text>
+        </Pressable>
       </Animated.View>
     );
   }
