@@ -76,10 +76,10 @@ export default List = ({ name, list, setSelectedTap }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     marginBottom: 10,
     borderRadius: 5,
-    height: '30%',
+    height: '38%',
     width: '95%',
     top: '5%',
     backgroundColor: '#f7f7f7',

@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
 import { updateTap } from '../services';
 
-export default EditorButtons = ({ selectedTap, volume }) => {
+export default EditorButtons = ({
+  setTaps,
+  setSelectedTap,
+  selectedTap,
+  volume,
+  setVolume,
+}) => {
   function save() {
-    volume = volume / 10;
-    updateTap({ ...selectedTap, volume });
+    const updatedTap = { ...selectedTap, volume: volume / 10 };
+    console.log({ updatedTap });
+    updateTap(updatedTap);
+    setTaps(prev => [
+      ...prev.filter(tap => tap.id !== updatedTap.id),
+      updatedTap,
+    ]);
   }
+  function cancel() {
+    setVolume(selectedTap.volume * 10);
+  }
+
+  // useEffect(() => {}, []);
+
   return (
     <Animated.View style={styles.container}>
       <Pressable style={styles.button} onPress={save}>
         <Text style={styles.text}>Save</Text>
       </Pressable>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={cancel}>
         <Text style={styles.text}>Cancel</Text>
       </Pressable>
     </Animated.View>

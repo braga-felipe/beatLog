@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  SafeAreaView,
+} from 'react-native';
 import { getBeatTaps } from '../services';
 import List from '../components/List';
-import BackgroundImage from '../components/BackgroundImage';
+// import BackgroundImage from '../components/BackgroundImage';
 import EditControl from '../components/EditControl';
-import SaveButtons from '../components/SaveButtons';
 
 export default EditBeat = ({ route, navigation }) => {
   /* get the beat from params */
@@ -25,10 +31,15 @@ export default EditBeat = ({ route, navigation }) => {
   }, []);
 
   return (
-    <BackgroundImage source={require('../assets/edit-bg.jpg')}>
+    // <BackgroundImage source={require('../assets/edit-bg.jpg')}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.text}>{beat.name}</Text>
       <List name="Taps" list={taps} setSelectedTap={setSelectedTap} />
-      <EditControl selectedTap={selectedTap} setSelectedTap={setSelectedTap} />
+      <EditControl
+        selectedTap={selectedTap}
+        setSelectedTap={setSelectedTap}
+        setTaps={setTaps}
+      />
       <View style={styles.buttonContainer}>
         <Pressable onPress={() => navigation.goBack()}>
           <Image
@@ -37,14 +48,22 @@ export default EditBeat = ({ route, navigation }) => {
           />
         </Pressable>
       </View>
-    </BackgroundImage>
+    </SafeAreaView>
+    // </BackgroundImage>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    alignItems: 'center',
+    backgroundColor: 'black',
+  },
   buttonContainer: {
     position: 'absolute',
-    top: '95.5%',
+    top: '96.5%',
     backgroundColor: 'white',
     borderRadius: 50,
     width: '20%',

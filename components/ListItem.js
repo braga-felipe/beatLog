@@ -43,6 +43,7 @@ export default ListItem = ({
     setTimeout(
       () => {
         if (item.isTap) {
+          console.log('popUp ListItem');
           const sound = sounds[item.sound];
           sound.stop();
           sound.setVolume(item.volume);
@@ -63,7 +64,6 @@ export default ListItem = ({
       if (item.isBeat) return navigation.navigate('BeatEditor', { beat: item });
 
       if (isPressed) {
-        console.log('isPressed and extended so unextended');
         margin.value = withTiming('0%');
         setTimeout(() => {
           setIsPressed(false);
@@ -82,7 +82,7 @@ export default ListItem = ({
   useEffect(() => {
     popUp();
     if (selectedId !== item.id) margin.value = withTiming('0%');
-  }, [selectedId]);
+  }, []);
 
   return (
     <>
