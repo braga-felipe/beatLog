@@ -25,6 +25,7 @@ export default EditControl = ({ selectedTap, setSelectedTap, setTaps }) => {
     volume,
     sound,
   };
+
   function update() {
     if (selectedTap !== undefined) {
       setVolume(selectedTap.volume * 10);
