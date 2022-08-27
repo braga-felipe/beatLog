@@ -12,7 +12,11 @@ import EditorButtons from '../components/EditorButtons';
 export default EditControl = ({ selectedTap, setSelectedTap, setTaps }) => {
   const [volume, setVolume] = useState(null);
   const [sound, setSound] = useState('-');
-  const sounds = ['beep', 'kick', 'openHiHat', 'shortHiHat'];
+  const sounds = ['beep', 'kick', 'openHiHat', 'shortHiHat', 'snareSynth'];
+  const opacity =
+    selectedTap.volume * 10 !== volume || selectedTap.sound !== sound
+      ? 1
+      : 0.65;
   const buttonProps = {
     selectedTap,
     setSelectedTap,
@@ -43,8 +47,8 @@ export default EditControl = ({ selectedTap, setSelectedTap, setTaps }) => {
               height: '200%',
             }}
           />
-        </View>
-        <View style={styles.controlContainer}>
+          {/* </View> */}
+          {/* <View style={styles.controlContainer}> */}
           <Text style={styles.text}>Sound: </Text>
           <SelectDropdown
             data={sounds}
@@ -54,12 +58,10 @@ export default EditControl = ({ selectedTap, setSelectedTap, setTaps }) => {
             defaultValue={sound}
           />
         </View>
-        {(selectedTap.volume * 10 !== volume ||
-          selectedTap.sound !== sound) && (
-          <Animated.View style={styles.buttonContainer}>
-            <EditorButtons {...buttonProps} />
-          </Animated.View>
-        )}
+
+        <Animated.View style={[styles.buttonContainer, { opacity: opacity }]}>
+          <EditorButtons {...buttonProps} />
+        </Animated.View>
       </Animated.View>
     )
   );
@@ -81,13 +83,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   controlContainer: {
+    paddingVertical: 10,
     backgroundColor: '#303134',
     borderRadius: 3,
     marginVertical: '2%',
-    height: '30%',
+    height: '65%',
     width: '95%',
     alignSelf: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   buttonContainer: {

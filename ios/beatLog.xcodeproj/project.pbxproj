@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		5D71D78328AE307B00E748B1 /* opening-cymbal.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5D71D78228AE307B00E748B1 /* opening-cymbal.wav */; };
 		5D71D78528AE3B1E00E748B1 /* kick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5D71D78428AE3B1E00E748B1 /* kick.wav */; };
+		5D8A01FA28BA7336007047C7 /* snare-synth.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5D8A01F928BA7336007047C7 /* snare-synth.wav */; };
 		5DB6C74328BA60ED0070504C /* open-drum-loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5DB6C74228BA60ED0070504C /* open-drum-loop.wav */; };
 		5DB6C74528BA629D0070504C /* shortHiHat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5DB6C74428BA629D0070504C /* shortHiHat.wav */; };
 		5DB6C74928BA65D40070504C /* hit-hat-lick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5DB6C74628BA65D40070504C /* hit-hat-lick.wav */; };
@@ -46,6 +47,7 @@
 		4A8F5A0D77F421A14CD9F3A3 /* Pods-beatLog-beatLogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-beatLog-beatLogTests.release.xcconfig"; path = "Target Support Files/Pods-beatLog-beatLogTests/Pods-beatLog-beatLogTests.release.xcconfig"; sourceTree = "<group>"; };
 		5D71D78228AE307B00E748B1 /* opening-cymbal.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "opening-cymbal.wav"; sourceTree = "<group>"; };
 		5D71D78428AE3B1E00E748B1 /* kick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kick.wav; sourceTree = "<group>"; };
+		5D8A01F928BA7336007047C7 /* snare-synth.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "snare-synth.wav"; sourceTree = "<group>"; };
 		5DB6C74228BA60ED0070504C /* open-drum-loop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "open-drum-loop.wav"; sourceTree = "<group>"; };
 		5DB6C74428BA629D0070504C /* shortHiHat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shortHiHat.wav; sourceTree = "<group>"; };
 		5DB6C74628BA65D40070504C /* hit-hat-lick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "hit-hat-lick.wav"; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				5D71D78428AE3B1E00E748B1 /* kick.wav */,
 				5D71D78228AE307B00E748B1 /* opening-cymbal.wav */,
 				5DB6C74828BA65D40070504C /* beep.mp3 */,
+				5D8A01F928BA7336007047C7 /* snare-synth.wav */,
 				5DB6C74628BA65D40070504C /* hit-hat-lick.wav */,
 				5DB6C74728BA65D40070504C /* open-hi-hat.wav */,
 				5DB6C74428BA629D0070504C /* shortHiHat.wav */,
@@ -268,6 +271,7 @@
 				5DB6C74B28BA65D40070504C /* beep.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				5D71D78328AE307B00E748B1 /* opening-cymbal.wav in Resources */,
+				5D8A01FA28BA7336007047C7 /* snare-synth.wav in Resources */,
 				5DB6C74328BA60ED0070504C /* open-drum-loop.wav in Resources */,
 				5DB6C74A28BA65D40070504C /* open-hi-hat.wav in Resources */,
 				5DB6C74528BA629D0070504C /* shortHiHat.wav in Resources */,

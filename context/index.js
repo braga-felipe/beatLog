@@ -16,7 +16,7 @@ const openDrumLoop = new Sound(
       console.log('failed to load open-drum-loop', error);
       return;
     }
-    openDrumLoop.play();
+    // openDrumLoop.play();
     setTimeout(() => openDrumLoop.stop(), 3000);
     console.log('loaded open-drum-loop successfully');
   },
@@ -65,8 +65,16 @@ const shortHiHat = new Sound('shortHiHat.wav', Sound.MAIN_BUNDLE, error => {
   }
   console.log('loaded shortHiHat successfully');
 });
+const snareSynth = new Sound('snare-synth.wav', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load snare-synth', error);
+    return;
+  }
+  console.log('loaded snare-synth successfully');
+});
 
 const sounds = {
+  snareSynth,
   shortHiHat,
   openDrumLoop,
   hiHatLick,
