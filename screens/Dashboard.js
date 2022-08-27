@@ -6,6 +6,7 @@ import BackgroundPulse from '../components/BackgroundPulse';
 import Diamond from '../components/Diamond';
 import Library from '../screens/Library';
 import PlayButtonsView from '../screens/PlayButtonsView';
+import SoundIcon from '../components/SoundIcon';
 
 export default Dashboard = () => {
   /* swtich states to render components conditionally */
@@ -35,6 +36,7 @@ export default Dashboard = () => {
           {isPlay && (
             <>
               {/* Buttons to manage Play */}
+              <SoundIcon />
               <PlayButtonsView isPlay={isPlay} setIsPlay={setIsPlay} />
             </>
           )}

@@ -7,6 +7,34 @@ const Sound = require('react-native-sound');
 Sound.setCategory('Playback');
 
 /* Sounds!! */
+
+const openDrumLoop = new Sound(
+  'open-drum-loop.wav',
+  Sound.MAIN_BUNDLE,
+  error => {
+    if (error) {
+      console.log('failed to load open-drum-loop', error);
+      return;
+    }
+    openDrumLoop.play();
+    setTimeout(() => openDrumLoop.stop(), 3000);
+    console.log('loaded open-drum-loop successfully');
+  },
+);
+const hiHatLick = new Sound('hit-hat-lick.wav', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load hit-hat-lick', error);
+    return;
+  }
+});
+const openHiHat = new Sound('open-hi-hat.wav', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load open-hi-hat', error);
+    return;
+  }
+
+  console.log('loaded open-hi-hat successfully');
+});
 const kick = new Sound('kick.wav', Sound.MAIN_BUNDLE, error => {
   if (error) {
     console.log('failed to load kick', error);
@@ -30,8 +58,19 @@ const beep = new Sound('beep.mp3', Sound.MAIN_BUNDLE, error => {
   }
   console.log('loaded beep successfully');
 });
+const shortHiHat = new Sound('shortHiHat.wav', Sound.MAIN_BUNDLE, error => {
+  if (error) {
+    console.log('failed to load shortHiHat', error);
+    return;
+  }
+  console.log('loaded shortHiHat successfully');
+});
 
 const sounds = {
+  shortHiHat,
+  openDrumLoop,
+  hiHatLick,
+  openHiHat,
   kick,
   beep,
   welcome,
@@ -40,7 +79,7 @@ const sounds = {
 export const BeatProvider = ({ children }) => {
   const [beat, setBeat] = useState({});
   const [isTapped, setIsTapped] = useState(false);
-
+  const [soundSwitch, setSoundSwitch] = useState(true);
   /* ---> Variables for listen function <--- */
   const tapNum = useRef(0);
   const timeArr = useRef([]);
@@ -53,7 +92,6 @@ export const BeatProvider = ({ children }) => {
   function listen() {
     tapLogger(tapNum.current, timeArr.current, taps.current);
     tapNum.current += 1;
-    console.log('taps:', taps.current);
   }
 
   /* Function to reset current taps state*/
@@ -91,7 +129,7 @@ export const BeatProvider = ({ children }) => {
     if (!isPlay) listen();
     /* TODO: add a switch to either play or not during listen
         i.e. if(soundSwitch) */
-    sound ? sound.play() : beep.play();
+    if (soundSwitch) sound ? sound.play() : beep.play();
     /* Controls rendering of back/close button */
     setIsTapped(true);
     /* Dance animation */
@@ -119,6 +157,8 @@ export const BeatProvider = ({ children }) => {
         isTapped,
         setIsTapped,
         scale,
+        soundSwitch,
+        setSoundSwitch,
       }}>
       {children}
     </BeatContext.Provider>

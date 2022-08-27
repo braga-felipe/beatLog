@@ -6,11 +6,13 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import SelectDropdown from 'react-native-select-dropdown';
 import EditorButtons from '../components/EditorButtons';
 
 export default EditControl = ({ selectedTap, setSelectedTap, setTaps }) => {
   const [volume, setVolume] = useState(null);
   const [sound, setSound] = useState('-');
+  const sounds = ['beep', 'kick', 'openHiHat', 'shortHiHat'];
   const buttonProps = {
     selectedTap,
     setSelectedTap,
@@ -26,7 +28,6 @@ export default EditControl = ({ selectedTap, setSelectedTap, setTaps }) => {
     }
   }
 
-  console.log({ selectedTap });
   useEffect(() => update(), [selectedTap]);
   return (
     selectedTap.isTap && (
@@ -44,9 +45,17 @@ export default EditControl = ({ selectedTap, setSelectedTap, setTaps }) => {
           />
         </View>
         <View style={styles.controlContainer}>
-          <Text style={styles.text}>Sound: {sound}</Text>
+          <Text style={styles.text}>Sound: </Text>
+          <SelectDropdown
+            data={sounds}
+            onSelect={(selectedSound, index) => {
+              setSound(selectedSound);
+            }}
+            defaultValue={sound}
+          />
         </View>
-        {selectedTap.volume * 10 !== volume && (
+        {(selectedTap.volume * 10 !== volume ||
+          selectedTap.sound !== sound) && (
           <Animated.View style={styles.buttonContainer}>
             <EditorButtons {...buttonProps} />
           </Animated.View>

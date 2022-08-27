@@ -12,10 +12,11 @@ export default EditorButtons = ({
   setSelectedTap,
   selectedTap,
   volume,
+  sound,
   setVolume,
 }) => {
   function save() {
-    const updatedTap = { ...selectedTap, volume: volume / 10 };
+    const updatedTap = { ...selectedTap, volume: volume / 10, sound };
     console.log({ updatedTap });
     updateTap(updatedTap);
     setTaps(prev => [
