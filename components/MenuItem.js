@@ -1,26 +1,38 @@
-import {StyleSheet, Image, Text, Pressable} from 'react-native';
+import { StyleSheet, Image, Text, Pressable } from 'react-native';
 import React from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/native';
 
 export default MenuItem = props => {
+  const { navigate } = useNavigation();
+
   /* props to control animation */
-  const {icon, name, width, height, modalTop, modalBgColor, setView, onTouch} =
-    props;
+  const {
+    icon,
+    name,
+    width,
+    height,
+    modalTop,
+    modalBgColor,
+    setView,
+    onTouch,
+  } = props;
   /* to control scale animation */
   const scale = useSharedValue(1);
   const button = useAnimatedStyle(() => {
     return {
-      transform: [{scale: scale.value}],
+      transform: [{ scale: scale.value }],
     };
   });
 
   /* function to animate Library button and render Component */
   function onLibrary() {
-    scale.value = withTiming(160, {duration: 500});
+    navigate('Auth');
+    scale.value = withTiming(160, { duration: 500 });
     modalTop.value = withTiming(0);
     width.value = withTiming('100%');
     height.value = withTiming('100%');

@@ -7,6 +7,10 @@ import Dashboard from './screens/Dashboard';
 import Library from './screens/Library';
 import SaveModal from './screens/SaveModal';
 import BeatEditor from './screens/BeatEditor';
+
+/* Auth */
+import Auth from './screens/Auth';
+
 /* Context */
 import { BeatProvider } from './context';
 
@@ -27,12 +31,14 @@ export default App = () => {
             component={BeatEditor}
             options={{ headerShown: false }}
           />
+
           <Stack.Group
             screenOptions={{
               presentation: 'transparentModal',
               headerShown: false,
             }}>
             <Stack.Screen name="Save" component={SaveModal} />
+            <Stack.Screen name="Auth" component={Auth} />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

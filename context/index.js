@@ -16,7 +16,7 @@ const openDrumLoop = new Sound(
       console.log('failed to load open-drum-loop', error);
       return;
     }
-    // openDrumLoop.play();
+    openDrumLoop.play();
     setTimeout(() => openDrumLoop.stop(), 3000);
     console.log('loaded open-drum-loop successfully');
   },

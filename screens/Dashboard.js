@@ -8,6 +8,8 @@ import Library from '../screens/Library';
 import PlayButtonsView from '../screens/PlayButtonsView';
 import SoundIcon from '../components/SoundIcon';
 
+/* Auth */
+
 export default Dashboard = () => {
   /* swtich states to render components conditionally */
   const [isLibrary, setIsLibrary] = useState(false);
